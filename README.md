@@ -171,98 +171,98 @@ MEDIA_MAXKB_DEFAULT=10240
     ```
 2) Include Livewire & Alpine (usually in your app layout):
 
-```html
-@livewireStyles
-<style>[x-cloak]{ display:none !important; }</style>
-@livewireScripts
-```
+    ```html
+    @livewireStyles
+    <style>[x-cloak]{ display:none !important; }</style>
+    @livewireScripts
+    ```
 
 3) Drop the component into your Blade:
 
-```html
-<livewire:media-uploader :for="$user" collection="avatars" preset="images" />
-```
+    ```html
+    <livewire:media-uploader :for="$user" collection="avatars" preset="images" />
+    ```
 
 ---
 
 ## Usage Examples
 
-**1) Pass a saved model instance**
-```html
-<livewire:media-uploader :for="$user" collection="avatars" preset="images" />
-```
+1) Pass a saved model instance
+    ```html
+    <livewire:media-uploader :for="$user" collection="avatars" preset="images" />
+    ```
 
-**2) Short string model + id**
-```html
-<livewire:media-uploader model="user" :id="$user->id" collection="images" preset="images" />
-```
+2) Short string model + id
+    ```html
+    <livewire:media-uploader model="user" :id="$user->id" collection="images" preset="images" />
+    ```
 
-**3) Morph map alias**
-```html
-<livewire:media-uploader model="users" :id="$user->id" collection="profile" preset="images" />
-```
+3) Morph map alias**
+    ```html
+    <livewire:media-uploader model="users" :id="$user->id" collection="profile" preset="images" />
+    ```
 
-**4) FQCN**
-```html
-<livewire:media-uploader model="\App\Models\User" :id="$user->id" collection="documents" />
-```
+4) FQCN
+    ```html
+    <livewire:media-uploader model="\App\Models\User" :id="$user->id" collection="documents" />
+    ```
 
-**5) Dotted path + custom namespaces**
-```html
-<livewire:media-uploader
-    model="crm.contact"
-    :id="$contactId"
-    :namespaces="['App\\Domain\\Crm\\Models', 'App\\Models']"
-    collection="images"
-    preset="images"
-/>
-```
+5) Dotted path + custom namespaces
+    ```html
+    <livewire:media-uploader
+        model="crm.contact"
+        :id="$contactId"
+        :namespaces="['App\\Domain\\Crm\\Models', 'App\\Models']"
+        collection="images"
+        preset="images"
+    />
+    ```
 
-**6) Local aliases (per-instance)**
-```html
-<livewire:media-uploader
-    model="profile"
-    :id="$user->id"
-    :aliases="['profile' => \App\Models\User::class]"
-    collection="gallery"
-/>
-```
+6) Local aliases (per-instance)
+    ```html
+    <livewire:media-uploader
+        model="profile"
+        :id="$user->id"
+        :aliases="['profile' => \App\Models\User::class]"
+        collection="gallery"
+    />
+    ```
 
-**7) Single-file mode + hide list**
-```html
-<livewire:media-uploader
-    :for="$user"
-    collection="avatar"
-    :multiple="false"
-    :showList="false"
-    preset="images"
-/>
-```
+7) Single-file mode + hide list
+    ```html
+    <livewire:media-uploader
+        :for="$user"
+        collection="avatar"
+        :multiple="false"
+        :showList="false"
+        preset="images"
+    />
+    ```
 
-**8) Name conflict strategies**
-```html
-<livewire:media-uploader :for="$user" collection="files" onNameConflict="rename" />
-<livewire:media-uploader :for="$user" collection="files" onNameConflict="replace" />
-<livewire:media-uploader :for="$user" collection="files" onNameConflict="skip" />
-<livewire:media-uploader :for="$user" collection="files" onNameConflict="allow" />
-```
+8) Name conflict strategies
+    ```html
+    <livewire:media-uploader :for="$user" collection="files" onNameConflict="rename" />
+    <livewire:media-uploader :for="$user" collection="files" onNameConflict="replace" />
+    <livewire:media-uploader :for="$user" collection="files" onNameConflict="skip" />
+    <livewire:media-uploader :for="$user" collection="files" onNameConflict="allow" />
+    ```
 
-**9) Duplicate detection by SHA-256**
-```html
-<livewire:media-uploader :for="$user" collection="images" preset="images" :skipExactDuplicates="true" />
-```
+9) Duplicate detection by SHA-256
+    ```html
+    <livewire:media-uploader :for="$user" collection="images" preset="images" :skipExactDuplicates="true" />
+    ```
 
-**10) Restrict types/mimes/max size manually**
-```html
-<livewire:media-uploader
-    :for="$user"
-    collection="documents"
-    :accept="'.pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'"
-    :allowedTypes="['pdf','doc','docx']"
-    :allowedMimes="['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document']"
-    :maxSizeKb="5120"
-/>
-```
+10) Restrict types/mimes/max size manually
+    ```html
+    <livewire:media-uploader
+        :for="$user"
+        collection="documents"
+        :accept="'.pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'"
+        :allowedTypes="['pdf','doc','docx']"
+        :allowedMimes="['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document']"
+        :maxSizeKb="5120"
+    />
+    ```
 
 ---
 

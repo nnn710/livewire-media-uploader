@@ -137,6 +137,38 @@ MEDIA_MAXKB_DEFAULT=10240
 
 1) Ensure your target Eloquent model implements `Spatie\MediaLibrary\HasMedia` and is **saved**.
 
+    #### Model Setup (Spatie Media Library)
+    
+    Your model must implement `HasMedia` and be **saved** before attaching media.
+    
+    ```php
+    use Spatie\MediaLibrary\HasMedia;
+    use Spatie\MediaLibrary\InteractsWithMedia;
+    use Spatie\MediaLibrary\MediaCollections\Models\Media;
+    
+    class Post extends Model implements HasMedia
+    {
+        use InteractsWithMedia;
+    
+        public function registerMediaCollections(): void
+        {
+            $this->addMediaCollection('photos')        // matches collection="photos"
+                ->useDisk('public')                    // or 's3'
+                ->withResponsiveImages();             // optional
+    
+            // If you also have avatars somewhere:
+            $this->addMediaCollection('avatars')->singleFile();
+        }
+    
+        public function registerMediaConversions(Media $media = null): void
+        {
+            $this->addMediaConversion('thumb')
+                ->fit('contain', 256, 256)
+                ->performOnCollections('photos', 'avatars') // scope to specific collections
+                ->nonQueued();
+        }
+    }
+    ```
 2) Include Livewire & Alpine (usually in your app layout):
 
 ```html
@@ -304,34 +336,6 @@ Example:
 ```
 
 ---
-
-## Model Setup (Spatie Media Library)
-
-Your model must implement `HasMedia` and be **saved** before attaching media.
-
-```php
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-
-class User extends Model implements HasMedia
-{
-    use InteractsWithMedia;
-
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('images');
-        $this->addMediaCollection('avatars');
-    }
-
-    // Optional thumbnail conversion for the list
-    public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
-    {
-        $this->addMediaConversion('thumb')
-            ->fit('contain', 256, 256)
-            ->nonQueued();
-    }
-}
-```
 
 > The list view tries `getUrl('thumb')` and falls back to `getUrl()` if no conversion is available.
 

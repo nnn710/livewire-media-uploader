@@ -1,0 +1,51 @@
+{
+    "name": "codebyray/livewire-media-uploader",
+    "description": "Reusable Livewire v3 media uploader that integrates with Spatie Media Library and ships a publishable view.",
+    "type": "library",
+    "license": "MIT",
+    "version": "dev-main",
+    "authors": [
+        { "name": "Ray Cuzzart", "email": "dev@codebyray.com" }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "livewire/livewire": "^3.0",
+        "laravel/framework": "^10.0|^11.0|^12.0",
+        "spatie/laravel-medialibrary": "^10.12"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0 || ^9.0",
+        "pestphp/pest": "^2.34",
+        "pestphp/pest-plugin-laravel": "^2.4",
+        "phpunit/phpunit": "^10.5",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^7.10"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Codebyray\\LivewireMediaUploader\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest --colors=always"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codebyray\\LivewireMediaUploader\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Codebyray\\LivewireMediaUploader\\MediaUploaderServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

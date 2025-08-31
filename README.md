@@ -1,6 +1,6 @@
 # Livewire Media Uploader
 
-Reusable **Livewire v3** media uploader with **TailwindCSS** UI, Alpine-powered overlays, and first-class integration with **Spatie Laravel Media Library**. Ships with a **publishable Blade view** so each app can theme it as needed.
+Livewire Media Uploader is a reusable Livewire v3 component that integrates seamlessly with Spatie Laravel Media Library. It ships a clean Tailwind Blade view (fully publishable), Alpine overlays for previews and confirmations, drag-and-drop uploads, per-file metadata (caption/description/order), configurable presets, name-conflict strategies, and optional SHA-256 duplicate detection. Drop it in, point it at a model, and you’re shipping in minutes.
 
 ---
 
@@ -78,20 +78,58 @@ The component is registered under **both** aliases:
 
 ## Publishing Assets
 
-**Config:**
+### Config:
 ```bash
 php artisan vendor:publish --tag=media-uploader-config
 ```
 
-**Views:**
+### Views:
 ```bash
 php artisan vendor:publish --tag=media-uploader-views
 ```
 
 After publishing, customize the Blade at:
-```
+```html
 resources/views/vendor/media-uploader/livewire/media-uploader.blade.php
 ```
+
+
+## Environment variables (optional)
+You can override preset limits and accepted types/mimes via .env. These map directly to config/media-uploader.php:
+
+```dotenv
+# Livewire Media Uploader (optional)
+
+# Images
+MEDIA_TYPES_IMAGES=jpg,jpeg,png,webp,avif,gif
+MEDIA_MIMES_IMAGES=image/jpeg,image/png,image/webp,image/avif,image/gif
+MEDIA_MAXKB_IMAGES=10240
+
+# Documents
+MEDIA_TYPES_DOCS=pdf,doc,docx,xls,xlsx,ppt,pptx,txt
+MEDIA_MIMES_DOCS=application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/plain
+MEDIA_MAXKB_DOCS=20480
+
+# Videos
+MEDIA_TYPES_VIDEOS=mp4,mov,webm
+MEDIA_MIMES_VIDEOS=video/mp4,video/quicktime,video/webm
+MEDIA_MAXKB_VIDEOS=102400
+
+# Fallback preset
+MEDIA_TYPES_DEFAULT=jpg,jpeg,png,webp,avif,gif,pdf,doc,docx,xls,xlsx,ppt,pptx,txt
+MEDIA_MIMES_DEFAULT=image/jpeg,image/png,image/webp,image/avif,image/gif,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/plain
+MEDIA_MAXKB_DEFAULT=10240
+```
+
+### Notes
+- Values are comma-separated; spaces are OK (the package trims them).
+- After changing .env, run:
+```bash
+- php artisan config:clear
+# (or) php artisan config:cache
+```
+- The `````<input accept="…">````` attribute is auto-filled from the active preset when accept_from_config is true (default). You can still override it per-component with the accept prop.
+- If uploads fail due to size, make sure your PHP/Server limits also allow it (e.g. upload_max_filesize, post_max_size).
 
 ---
 
@@ -334,8 +372,8 @@ class User extends Model implements HasMedia
 
 ## Roadmap
 
-- Drag-to-reorder (update `order_column`)
-- Optional queued conversions hints
+- Drag-to-reorder (update `order_column`).
+- Show document icon instead of thumbnail in Attached media list if the file is not an image.
 
 PRs welcome!
 
@@ -343,7 +381,7 @@ PRs welcome!
 
 ## License
 
-**MIT** © Ray Cuzzart II
+**MIT** © CodebyRay (Ray Cuzzart II)
 
 ---
 

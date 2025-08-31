@@ -1,12 +1,27 @@
 {
     "name": "codebyray/livewire-media-uploader",
     "description": "Reusable Livewire v3 media uploader that integrates with Spatie Media Library and ships a publishable view.",
+    "keywords": [
+        "laravel",
+        "livewire",
+        "spatie",
+        "media-library",
+        "spatie-laravel-medialibrary",
+        "uploader",
+        "file-uploads",
+        "tailwindcss",
+        "alpinejs",
+        "component"],
     "type": "library",
     "license": "MIT",
-    "version": "dev-main",
     "authors": [
-        { "name": "Ray Cuzzart", "email": "dev@codebyray.com" }
+        {
+            "name": "CodebyRay",
+            "email": "dev@codebyray.com"
+        }
     ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "require": {
         "php": ">=8.1",
         "livewire/livewire": "^3.0",
@@ -41,8 +56,6 @@
             ]
         }
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true

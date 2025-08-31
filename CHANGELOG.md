@@ -9,17 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [Unreleased]
+
 ### Added
-- Docs: environment variable examples for presets (`MEDIA_TYPES_*`, `MEDIA_MIMES_*`, `MEDIA_MAXKB_*`).
-- Tests: deterministic duplicate-detection test helper (`TestableMediaUploader`) and event-based assertions.
-- Troubleshooting guidance for Testbench/SQLite and Livewire temp upload disk.
+- Configuration documentation for each option in `config/media-uploader.php`, including environment variable overrides, presets (types, mimes, max_kb), and collection → preset mapping.
+- Guidance for creating and registering custom themes:
+    - Create a new folder under `themes`, e.g. `custom`.
+    - Copy the existing `media-uploader` theme file from `tailwind` or `bootstrap` into the new `custom` folder (do not change the file name).
+    - Edit the copied file as desired.
+    - Register it in the `themes` config array, for example: `'custom' => 'media-uploader::themes.custom.media-uploader'`.
+    - Use it globally via `.env` (`MEDIA_UPLOADER_THEME=custom`) or per instance:
+      <livewire:media-uploader
+      :for="$post"
+      collection="images"
+      theme="custom"
+      />
 
 ### Changed
-- Test suite favors Pest; PHPUnit example retained only if desired by consumers.
-- Assertions updated to reflect Spatie filename sanitization (spaces → dashes on rename).
+- Clarified the behavior of `accept_from_config` and how the `accept` attribute is derived from the active preset.
 
 ### Fixed
-- Intermittent test failures: ensured `media` table migration loads under Testbench and configured fake disks (`public`, `local`, `tmp-for-tests`).
+
 
 ---
 

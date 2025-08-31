@@ -18,17 +18,17 @@ class MediaUploader extends Component
 {
     use WithFileUploads;
 
-    public array   $namespaces = ['App\\Models'];
-    public array   $aliases    = [];
-    public ?string $collection = 'images';
-    public ?string $disk       = null;
-    public bool    $multiple   = true;
-    public ?string $accept     = null;
-    public bool    $showList   = true;
-    public int     $maxSizeKb  = 500;
-    public array   $uploads    = [];
-    public array   $selected   = [];
-    public array   $items      = [];
+    public array   $namespaces          = ['App\\Models'];
+    public array   $aliases             = [];
+    public ?string $collection          = 'images';
+    public ?string $disk                = null;
+    public bool    $multiple            = true;
+    public ?string $accept              = null;
+    public bool    $showList            = true;
+    public int     $maxSizeKb           = 500;
+    public array   $uploads             = [];
+    public array   $selected            = [];
+    public array   $items               = [];
     public string  $onNameConflict      = 'rename';
     public bool    $skipExactDuplicates = false;
     public ?string $preset              = null;
@@ -39,6 +39,7 @@ class MediaUploader extends Component
     public array   $pendingMeta         = [];
     public ?int    $confirmingDeleteId  = null;
     public string  $allowedLabel        = '';
+    public ?string $theme               = null;
 
     #[Locked] public string $resolvedModelClass;
     #[Locked] public int|string $resolvedModelId;

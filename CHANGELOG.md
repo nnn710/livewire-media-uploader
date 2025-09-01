@@ -9,19 +9,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [Unreleased]
+
 ### Added
-- Docs: environment variable examples for presets (`MEDIA_TYPES_*`, `MEDIA_MIMES_*`, `MEDIA_MAXKB_*`).
-- Tests: deterministic duplicate-detection test helper (`TestableMediaUploader`) and event-based assertions.
-- Troubleshooting guidance for Testbench/SQLite and Livewire temp upload disk.
+
 
 ### Changed
-- Test suite favors Pest; PHPUnit example retained only if desired by consumers.
-- Assertions updated to reflect Spatie filename sanitization (spaces → dashes on rename).
 
 ### Fixed
-- Intermittent test failures: ensured `media` table migration loads under Testbench and configured fake disks (`public`, `local`, `tmp-for-tests`).
+
 
 ---
+## [v0.2.0] — 2025-09-01
+
+### Added
+- **Theme system** with **Tailwind (default)** and **Bootstrap** themes.
+- **Custom themes** support:
+    1. Create a new folder under `resources/views/vendor/media-uploader/themes`, e.g. `custom/`.
+    2. Copy `media-uploader.blade.php` from `tailwind/` or `bootstrap/` into `custom/` (keep the filename).
+    3. Register in config:
+       ```php
+       'themes' => [
+           'tailwind'  => 'media-uploader::themes.tailwind.media-uploader',
+           'bootstrap' => 'media-uploader::themes.bootstrap.media-uploader',
+           'custom'    => 'media-uploader::themes.custom.media-uploader',
+       ],
+       'theme' => 'custom', // to make it default
+       ```
+    4. Or set per-instance:
+       ```html
+       <livewire:media-uploader :for="$post" collection="images" theme="custom" />
+       ```
+- Configuration docs for each option in `config/media-uploader.php`, including **ENV overrides**, presets (`types`, `mimes`, `max_kb`), and **collection → preset** mapping.
+
+### Changed
+- Default view now resolves via the **theme map** (Tailwind by default).  
+  Existing installs continue to render with Tailwind unless you switch themes.
+
+### Compatibility
+- **No breaking changes.** Defaults preserve prior behavior.
+- If you previously published the old (pre-theme) Blade, it will keep working if you’ve retained the legacy alias. If you want to use the new theme system, publish/move your override to `themes/<your-theme>/media-uploader.blade.php`.
+
+### Migration Notes (only if you customized the old path)
+- Minor migration required for users who published the old view (move file to the themed path).
+- Move your customized Blade from:
+    ```html
+    resources/views/vendor/media-uploader/livewire/media-uploader.blade.php
+    ```
+  to:
+    ```html
+    resources/views/vendor/media-uploader/themes/tailwind/media-uploader.blade.php
+    ```
+  (or into your custom theme folder), and register that theme in the config.
 
 ## [v0.1.0] — 2025-08-30
 ### Added

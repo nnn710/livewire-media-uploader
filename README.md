@@ -1,6 +1,6 @@
 # Livewire Media Uploader
 
-Livewire Media Uploader is a reusable Livewire v3 component that integrates seamlessly with Spatie Laravel Media Library. It ships a clean Tailwind Blade view (fully publishable), Alpine overlays for previews and confirmations, drag-and-drop uploads, per-file metadata (caption/description/order), configurable presets, name-conflict strategies, and optional SHA-256 duplicate detection. Drop it in, point it at a model, and you’re shipping in minutes.
+Livewire Media Uploader is a reusable Livewire v3 component that integrates seamlessly with Spatie Laravel Media Library. It ships a clean Tailwind Blade view by default (fully publishable), Bootstrap theme as an option, Alpine overlays for previews/confirmations, drag-and-drop uploads, per-file metadata (caption/description/order), configurable presets, name-conflict strategies, and optional SHA-256 duplicate detection. Drop it in, point it at a model, and you’re shipping in minutes.
 
 ---
 
@@ -25,7 +25,10 @@ Livewire Media Uploader is a reusable Livewire v3 component that integrates seam
 
 ## Features
 
-- ✅ Livewire v3 component with Tailwind-only Blade (no UI dependency)
+- ✅ Livewire v3 component with themeable Blade UI
+  - Tailwind (default)
+  - Bootstrap (optional)
+  - Fully publishable and overridable
 - ✅ Spatie Media Library integration (attach, list, edit meta, delete)
 - ✅ **Publishable view** for per-project customization
 - ✅ Drag & drop uploads + progress bar
@@ -50,6 +53,9 @@ Livewire Media Uploader is a reusable Livewire v3 component that integrates seam
 - spatie/laravel-medialibrary **^10.12**
 - TailwindCSS (optional but recommended for the default view)
 - Alpine.js (used by overlays/progress; see [Overlays & UX Notes](#overlays--ux-notes))
+- CSS depending on theme:
+  - Tailwind theme → TailwindCSS (recommended)
+  - Bootstrap theme → Bootstrap CSS (no Bootstrap JS required; Alpine drives modals)
 
 ---
 
@@ -90,10 +96,34 @@ php artisan vendor:publish --tag=media-uploader-views
 
 After publishing, customize the Blade at:
 ```html
-resources/views/vendor/media-uploader/livewire/media-uploader.blade.php
+resources/views/vendor/media-uploader/themes/tailwind/media-uploader.blade.php
+resources/views/vendor/media-uploader/themes/bootstrap/media-uploader.blade.php
 ```
-
-
+## Theme System (Tailwind + Bootstrap + custom)
+Select the theme in config/media-uploader.php:
+```php
+// config/media-uploader.php
+return [
+    'theme'  => 'tailwind', // 'tailwind' (default) or 'bootstrap'
+    'themes' => [
+        'tailwind'  => 'media-uploader::themes.tailwind.media-uploader',
+        'bootstrap' => 'media-uploader::themes.bootstrap.media-uploader',
+    ],
+    // ...
+];
+```
+### Custom themes
+- Copy an existing theme directory (e.g. themes/tailwind) to themes/custom and edit the Blade.
+- Register it in the map and select it:
+    ```php
+    'theme'  => 'custom',
+    'themes' => [
+        'tailwind'  => 'media-uploader::themes.tailwind.media-uploader',
+        'bootstrap' => 'media-uploader::themes.bootstrap.media-uploader',
+        'custom'    => 'media-uploader::themes.custom.media-uploader',
+    ],
+    ```
+  > Note: The component’s Livewire + Alpine behavior is identical across themes. Only classes/markup differ. If you use the Bootstrap theme, make sure your layout includes Bootstrap CSS.
 ## Environment variables (optional)
 You can override preset limits and accepted types/mimes via .env. These map directly to config/media-uploader.php:
 
